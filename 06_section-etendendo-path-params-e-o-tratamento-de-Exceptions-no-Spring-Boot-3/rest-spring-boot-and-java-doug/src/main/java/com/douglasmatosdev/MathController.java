@@ -65,16 +65,17 @@ public class MathController {
 		return convertToDouble(numberOne) / convertToDouble(numberTwo);
 	}
 
-	@RequestMapping(value ="/average/{number}", method = RequestMethod.GET)
+	@RequestMapping(value ="/average/{numberOne}/{numberTwo}", method = RequestMethod.GET)
 	public Double average(
-			@PathVariable(value = "number") String number
+			@PathVariable(value = "numberOne") String numberOne,
+			@PathVariable(value = "numberTwo") String numberTwo
 	) throws Exception {
 
-		if (!isNumeric(number)) {
+		if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
 			throw new UnsupportedMathOperationException("Please set a numeric value");
 		}
 
-		return convertToDouble(number) / 2;
+		return (convertToDouble(numberOne) + convertToDouble(numberTwo)) / 2;
 	}
 
 	@RequestMapping(value ="/squareroot/{number}", method = RequestMethod.GET)
@@ -86,7 +87,7 @@ public class MathController {
 			throw new UnsupportedMathOperationException("Please set a numeric value");
 		}
 
-		return convertToDouble(number) * convertToDouble(number);
+		return Math.sqrt(convertToDouble(number));
 	}
 
 
