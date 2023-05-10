@@ -26,6 +26,71 @@ public class MathController {
 		return convertToDouble(numberOne) + convertToDouble(numberTwo);
 	}
 
+	@RequestMapping(value ="/subtract/{numberOne}/{numberTwo}", method = RequestMethod.GET)
+	public Double subtract(
+			@PathVariable(value = "numberOne") String numberOne,
+			@PathVariable(value = "numberTwo") String numberTwo
+	) throws Exception {
+
+		if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+			throw new UnsupportedMathOperationException("Please set a numeric value");
+		}
+
+		return convertToDouble(numberOne) - convertToDouble(numberTwo);
+	}
+
+	@RequestMapping(value ="/multiply/{numberOne}/{numberTwo}", method = RequestMethod.GET)
+	public Double multiply(
+			@PathVariable(value = "numberOne") String numberOne,
+			@PathVariable(value = "numberTwo") String numberTwo
+	) throws Exception {
+
+		if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+			throw new UnsupportedMathOperationException("Please set a numeric value");
+		}
+
+		return convertToDouble(numberOne) * convertToDouble(numberTwo);
+	}
+
+	@RequestMapping(value ="/divide/{numberOne}/{numberTwo}", method = RequestMethod.GET)
+	public Double divide(
+			@PathVariable(value = "numberOne") String numberOne,
+			@PathVariable(value = "numberTwo") String numberTwo
+	) throws Exception {
+
+		if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+			throw new UnsupportedMathOperationException("Please set a numeric value");
+		}
+
+		return convertToDouble(numberOne) / convertToDouble(numberTwo);
+	}
+
+	@RequestMapping(value ="/average/{number}", method = RequestMethod.GET)
+	public Double average(
+			@PathVariable(value = "number") String number
+	) throws Exception {
+
+		if (!isNumeric(number)) {
+			throw new UnsupportedMathOperationException("Please set a numeric value");
+		}
+
+		return convertToDouble(number) / 2;
+	}
+
+	@RequestMapping(value ="/squareroot/{number}", method = RequestMethod.GET)
+	public Double squareroot(
+			@PathVariable(value = "number") String number
+	) throws Exception {
+
+		if (!isNumeric(number)) {
+			throw new UnsupportedMathOperationException("Please set a numeric value");
+		}
+
+		return convertToDouble(number) * convertToDouble(number);
+	}
+
+
+
 	private Double convertToDouble(String strNumber) {
 		if (strNumber == null) return 0D;
 		// BR 10,25 US 10.25

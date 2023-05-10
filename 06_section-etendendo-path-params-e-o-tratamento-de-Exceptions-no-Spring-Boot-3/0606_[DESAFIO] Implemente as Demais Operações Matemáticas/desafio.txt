@@ -1,0 +1,9 @@
+Desafio
+
+Implemente as outras operações matemáticas
+
+- Subtração
+- Multiplicação
+- Divisão
+- Média
+- Raiz Quadrada
