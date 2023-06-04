@@ -2,6 +2,8 @@ package com.douglasmatosdev.services;
 
 import com.douglasmatosdev.data.vo.v1.PersonVO;
 import com.douglasmatosdev.exceptions.ResourceNotFoundException;
+import com.douglasmatosdev.mapper.DozerMapper;
+import com.douglasmatosdev.model.Person;
 import com.douglasmatosdev.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,7 @@ public class PersonServices {
     public List<PersonVO> findAll() {
         logger.info("Finding all people!");
 
-        return repository.findAll();
+        return DozerMapper.parseListObjects(repository.findAll(), PersonVO.class);
     }
 
     public PersonVO findById(Long id) {
@@ -33,13 +35,15 @@ public class PersonServices {
         person.setAddress("Duque de Caxias - Rio de Janeiro - Brazil");
         person.setGender("Male");
 
-        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this IS!"));
+        var entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this IS!"));
+        return DozerMapper.parseObject(entity, PersonVO.class);
     }
 
     public PersonVO create(PersonVO person) {
         logger.info("Creating one person!");
-
-        return repository.save(person);
+        var entity = DozerMapper.parseObject(person, Person.class);
+        var vo = DozerMapper.parseObject(repository.save(entity), PersonVO.class);
+        return vo;
     }
 
     public PersonVO update(PersonVO person) {
@@ -52,7 +56,8 @@ public class PersonServices {
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
 
-        return repository.save(person);
+        var vo = DozerMapper.parseObject(repository.save(entity), PersonVO.class);
+        return vo;
     }
 
     public void delete(Long id) {
