@@ -1,5 +1,4 @@
 package com.douglasmatosdev.data.vo.v1;
-
 import java.io.Serializable;
 
 import org.springframework.hateoas.RepresentationModel;
